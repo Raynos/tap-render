@@ -68,7 +68,7 @@ test("render outputs TAP from multiple r's", function (assert) {
 
         assert.deepEqual(list, [
             "# two"
-            , "ok 1"
+            , "ok 1 this test passes"
             , ""
             , "1..2"
             , "# tests 2"
@@ -92,6 +92,7 @@ test("render outputs TAP from multiple r's", function (assert) {
         name: "two"
     }, {
         ok: true
+        , name: "this test passes"
     })
 
     r1.close()
@@ -126,8 +127,10 @@ test("handle failures", function (assert) {
             TAP_HEADER
             , "# zero"
             , "ok 1"
+            , "# passing"
+            , "ok 2"
             , "# one"
-            , "not ok 2"
+            , "not ok 3 this test fails"
             , "  ---"
             , "    operator: equal"
             , "    expected: \"one\""
@@ -135,9 +138,9 @@ test("handle failures", function (assert) {
             , "    at: foobar"
             , "  ..."
             , ""
-            , "1..2"
-            , "# tests 2"
-            , "# pass  1"
+            , "1..3"
+            , "# tests 3"
+            , "# pass  2"
             , "# fail  1"
         ])
         assert.end()
@@ -148,6 +151,9 @@ test("handle failures", function (assert) {
     r.push({
         name: "zero"
     }, { ok : true })
+    r.push({
+        name: "passing"
+    }, { ok: true })
 
     r.push({
         name: "one"
@@ -157,6 +163,7 @@ test("handle failures", function (assert) {
         , expected: "one"
         , actual: "two"
         , at: "foobar"
+        , name: "this test fails"
     })
 
     r.close()
