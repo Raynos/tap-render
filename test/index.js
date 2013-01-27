@@ -215,3 +215,68 @@ test("handle errors", function (assert) {
 
     r.close()
 })
+
+test("force flag", function (assert) {
+    var counter = 0
+
+    var r1 = Render({ force: true })
+    var r2 = Render()
+    var r3 = Render()
+
+    r1.pipe(toArray(function (list) {
+        counter++
+
+        assert.deepEqual(list, STANDARD_OUTPUT, "forced")
+    }))
+
+    r2.pipe(toArray(function (list) {
+        counter++
+
+        assert.deepEqual(list, [
+            TAP_HEADER
+            , "# one"
+            , "ok 1"
+        ], "start")
+    }))
+
+    r3.pipe(toArray(function (list) {
+        counter ++
+
+        assert.deepEqual(list, [
+            "# one"
+            , "ok 1"
+            , ""
+            , "1..2"
+            , "# tests 2"
+            , "# pass  2"
+            , ""
+            , "# ok"
+        ], "end")
+        assert.equal(counter, 3)
+        assert.end()
+    }))
+
+    r1.begin()
+    r2.begin()
+    r3.begin()
+
+    r1.push({
+        name: "one"
+    }, {
+        ok: true
+    })
+    r2.push({
+        name: "one"
+    }, {
+        ok: true
+    })
+    r3.push({
+        name: "one"
+    }, {
+        ok: true
+    })
+
+    r1.close()
+    r2.close()
+    r3.close()
+})

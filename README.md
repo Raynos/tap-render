@@ -8,6 +8,16 @@ A readable stream of TAP output
 
 Refactored out of [substack/tape][5]
 
+`tap-render` only emits the start and end of a valid TAP output
+  once even if there are multiple Render's. This is to allow 
+  you to use multiple TAP outputting test frameworks in one
+  process.
+
+If you want an individual `Render` to output the correct TAP
+  header and footer on it's own pass the force option
+
+`var r = Render({ force: true })`
+
 ## Example
 
 ```js

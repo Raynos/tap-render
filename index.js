@@ -8,13 +8,15 @@ var results = []
 
 module.exports = Render
 
-function Render() {
+function Render(opts) {
     var stream = new Stream()
     stream.readable = true
     stream.count = 0
     stream.fail = 0
     stream.pass = 0
     var began = false
+
+    opts = opts || {}
 
     stream.pipe = pipe
     stream.begin = begin
@@ -30,11 +32,14 @@ function Render() {
 
     function begin() {
         var first = running === 0
-        running++
+
+        if (!opts.force) {
+            running++
+        }
 
         began = true
 
-        if (first) {
+        if (first || opts.force) {
             stream.emit("data", "TAP version 13\n")
         }
     }
@@ -60,11 +65,11 @@ function Render() {
             , fail: stream.fail
         })
 
-        if (began) {
+        if (!opts.force && began) {
             running--
         }
 
-        if (running === 0) {
+        if (running === 0 || opts.force) {
             handleEnd(stream)
         }
 
