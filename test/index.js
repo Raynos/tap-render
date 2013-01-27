@@ -66,7 +66,7 @@ test("render outputs TAP from multiple r's", function (assert) {
 
         assert.deepEqual(list, [
             "# two"
-            , "ok 1 this test passes"
+            , "ok 2 this test passes"
             , ""
             , "1..2"
             , "# tests 2"
@@ -244,7 +244,7 @@ test("force flag", function (assert) {
 
         assert.deepEqual(list, [
             "# one"
-            , "ok 1"
+            , "ok 2"
             , ""
             , "1..2"
             , "# tests 2"

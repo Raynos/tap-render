@@ -1,15 +1,16 @@
-var Stream = require("stream")
+var PauseStream = require("pause-stream")
 var json = typeof JSON === "object" ? JSON : require("jsonify")
 
 // Keep a counter of all running Render's and a list of their
 // results
 var running = 0
+var processCount = 0
 var results = []
 
 module.exports = Render
 
 function Render(opts) {
-    var stream = new Stream()
+    var stream = PauseStream()
     stream.readable = true
     stream.count = 0
     stream.fail = 0
@@ -17,7 +18,9 @@ function Render(opts) {
     var began = false
 
     opts = opts || {}
+    var force = opts.force
 
+    var _pipe = stream.pipe
     stream.pipe = pipe
     stream.begin = begin
     stream.push = push
@@ -27,26 +30,26 @@ function Render(opts) {
 
     function pipe() {
         stream.piped = true
-        return Stream.prototype.pipe.apply(this, arguments)
+        return _pipe.apply(this, arguments)
     }
 
     function begin() {
         var first = running === 0
 
-        if (!opts.force) {
+        if (!force) {
             running++
         }
 
         began = true
 
-        if (first || opts.force) {
-            stream.emit("data", "TAP version 13\n")
+        if (first || force) {
+            stream.write("TAP version 13\n")
         }
     }
 
     function push(t, result) {
         if (t && t.name) {
-            stream.emit("data", "# " + t.name + "\n")
+            stream.write("# " + t.name + "\n")
         }
 
         if (result) {
@@ -65,11 +68,11 @@ function Render(opts) {
             , fail: stream.fail
         })
 
-        if (!opts.force && began) {
+        if (!force && began) {
             running--
         }
 
-        if (running === 0 || opts.force) {
+        if (running === 0 || force) {
             handleEnd(stream)
         }
 
@@ -78,12 +81,18 @@ function Render(opts) {
 
     function handleResult(result) {
         if (typeof result === "string") {
-            stream.emit("data", "# " + result + "\n")
+            stream.write("# " + result + "\n")
             return
         }
 
         stream.count++
-        stream.emit("data", encodeResult(result, stream.count))
+
+        if (!force) {
+            processCount++
+        }
+        var count = force ? stream.count : processCount
+
+        stream.write(encodeResult(result, count))
 
         if (result.ok) {
             stream.pass++
@@ -106,14 +115,15 @@ function handleEnd(stream) {
     }
 
     results = []
+    processCount = 0
 
-    stream.emit("data", "\n1.." + count + "\n")
-    stream.emit("data", "# tests " + count + "\n")
-    stream.emit("data", "# pass  " + pass + "\n")
+    stream.write("\n1.." + count + "\n")
+    stream.write("# tests " + count + "\n")
+    stream.write("# pass  " + pass + "\n")
     if (fail > 0) {
-        stream.emit("data", "# fail  " + fail + "\n")
+        stream.write("# fail  " + fail + "\n")
     } else {
-        stream.emit("data", "\n# ok\n")
+        stream.write("\n# ok\n")
     }
 }
 
