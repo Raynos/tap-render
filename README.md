@@ -6,6 +6,8 @@
 
 A readable stream of TAP output
 
+Refactored out of [substack/tape][5]
+
 ## Example
 
 ```js
@@ -75,3 +77,5 @@ r.pipe(process.stdout)
   [2]: http://travis-ci.org/Raynos/tap-render
   [3]: http://ci.testling.com/Raynos/tap-render.png
   [4]: http://ci.testling.com/Raynos/tap-render
+  [5]: https://github.com/substack/tape/blob/35ba8a36f023361089d1d09c122a8288cb061ede/lib/render.js
+  
