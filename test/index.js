@@ -180,7 +180,7 @@ test("handle errors", function (assert) {
             , "  ---"
             , "    operator: error"
             , "    expected:"
-            , "      "
+            , "      42"
             , "    actual:"
             , "      {"
             , "        \"message\": \"foo\","
@@ -212,6 +212,7 @@ test("handle errors", function (assert) {
             message: "foo"
             , stack: "some stack trace\nsome more lines\n more lines"
         }
+        , expected: 42
     })
 
     r.close()
