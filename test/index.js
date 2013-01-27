@@ -280,3 +280,27 @@ test("force flag", function (assert) {
     r2.close()
     r3.close()
 })
+
+test("async", function (assert) {
+    var r = Render()
+
+    r.pause().pipe(toArray(function (list) {
+        assert.deepEqual(list, STANDARD_OUTPUT)
+
+        assert.end()
+    }))
+
+    r.begin()
+
+    r.push({
+        name: "one"
+    }, {
+        ok: true
+    })
+
+    r.close()
+
+    process.nextTick(function () {
+        r.resume()
+    })
+})

@@ -76,7 +76,7 @@ function Render(opts) {
             handleEnd(stream)
         }
 
-        stream.emit("end")
+        stream.end()
     }
 
     function handleResult(result) {
