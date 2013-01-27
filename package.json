@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "jsonify": "0.0.0",
-    "pause-stream": "0.0.6"
+    "pause-stream": "0.0.7"
   },
   "devDependencies": {
     "tape": "~0.2.2",
