@@ -26,8 +26,6 @@ test("render is a stream", function (assert) {
     assert.ok(s.push)
     assert.ok(s.close)
 
-    s.close()
-
     assert.end()
 })
 

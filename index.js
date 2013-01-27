@@ -10,18 +10,16 @@ module.exports = Render
 
 function Render() {
     var stream = new Stream()
-    var first = running === 0
     stream.readable = true
     stream.count = 0
     stream.fail = 0
     stream.pass = 0
+    var began = false
 
     stream.pipe = pipe
     stream.begin = begin
     stream.push = push
     stream.close = close
-
-    running++
 
     return stream
 
@@ -31,6 +29,11 @@ function Render() {
     }
 
     function begin() {
+        var first = running === 0
+        running++
+
+        began = true
+
         if (first) {
             stream.emit("data", "TAP version 13\n")
         }
@@ -57,7 +60,9 @@ function Render() {
             , fail: stream.fail
         })
 
-        running--
+        if (began) {
+            running--
+        }
 
         if (running === 0) {
             handleEnd(stream)
