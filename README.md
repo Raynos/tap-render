@@ -25,6 +25,8 @@ var Render = require("tap-render")
 
 var r = Render()
 
+r.pipe(process.stdout)
+
 r.begin()
 // TAP version 13
 
@@ -68,8 +70,6 @@ r.close()
 # pass  2
 # fail  1
 */
-
-r.pipe(process.stdout)
 ```
 
 ## Installation
