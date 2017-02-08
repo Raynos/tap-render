@@ -15,6 +15,8 @@ function Render(opts) {
     stream.count = 0
     stream.fail = 0
     stream.pass = 0
+    stream.skip = 0
+    stream.todo = 0
     var began = false
 
     opts = opts || {}
@@ -62,11 +64,15 @@ function Render(opts) {
     }
 
     function close() {
-        results.push({
+      var result = {
             count: stream.count
             , pass: stream.pass
             , fail: stream.fail
-        })
+            , skip: stream.skip
+            , todo: stream.todo
+        }
+
+        results.push(result)
 
         if (!force && began) {
             running--
@@ -77,6 +83,8 @@ function Render(opts) {
         }
 
         stream.end()
+
+        return result;
     }
 
     function handleResult(result) {
@@ -96,6 +104,10 @@ function Render(opts) {
 
         if (result.ok) {
             stream.pass++
+        } else if (result.skip) {
+            stream.skip++
+        } else if (stream.todo) {
+            stream.todo++
         } else {
             stream.fail++
         }
@@ -103,28 +115,24 @@ function Render(opts) {
 }
 
 function handleEnd(stream) {
-    var count = 0
-    var pass = 0
-    var fail = 0
-
-    for (var i = 0; i < results.length; i++) {
-        var result = results[i]
-        count += result.count
-        pass += result.pass
-        fail += result.fail
-    }
-
     results = []
     processCount = 0
 
-    stream.write("\n1.." + count + "\n")
-    stream.write("# tests " + count + "\n")
-    stream.write("# pass  " + pass + "\n")
-    if (fail > 0) {
-        stream.write("# fail  " + fail + "\n")
-    } else {
-        stream.write("\n# ok\n")
+    stream.write("\n1.." + stream.count + "\n")
+    stream.write("# tests " + stream.count + "\n")
+    stream.write("# pass  " + stream.pass + "\n")
+
+    if (stream.fail > 0) {
+        stream.write("# fail  " + stream.fail + "\n")
     }
+    if (stream.skip > 0) {
+        stream.write("# skip  " + stream.skip + "\n")
+    }
+    if (stream.todo > 0) {
+        stream.write("# todo  " + stream.todo + "\n")
+    }
+
+    stream.write("\n# ok\n")
 }
 
 function encodeResult(result, count) {
