@@ -106,7 +106,7 @@ function Render(opts) {
             stream.pass++
         } else if (result.skip) {
             stream.skip++
-        } else if (stream.todo) {
+        } else if (result.todo) {
             stream.todo++
         } else {
             stream.fail++
