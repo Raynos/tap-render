@@ -115,24 +115,42 @@ function Render(opts) {
 }
 
 function handleEnd(stream) {
+    var count = 0
+    var skip = 0
+    var pass = 0
+    var todo = 0
+    var fail = 0
+
+    for (var i = 0; i < results.length; i++) {
+        var result = results[i]
+        count += result.count
+        skip += result.skip
+        pass += result.pass
+        todo += result.todo
+        fail += result.fail
+    }
+
     results = []
     processCount = 0
 
-    stream.write("\n1.." + stream.count + "\n")
-    stream.write("# tests " + stream.count + "\n")
-    stream.write("# pass  " + stream.pass + "\n")
+    stream.write("\n1.." + count + "\n")
+    stream.write("# tests " + count + "\n")
 
-    if (stream.fail > 0) {
-        stream.write("# fail  " + stream.fail + "\n")
-    }
     if (stream.skip > 0) {
-        stream.write("# skip  " + stream.skip + "\n")
-    }
-    if (stream.todo > 0) {
-        stream.write("# todo  " + stream.todo + "\n")
+        stream.write("# skip  " + skip + "\n")
     }
 
-    stream.write("\n# ok\n")
+    stream.write("# pass  " + pass + "\n")
+
+    if (todo > 0) {
+        stream.write("# todo  " + todo + "\n")
+    }
+
+    if (fail > 0) {
+        stream.write("# fail  " + fail + "\n")
+    } else {
+      stream.write("\n# ok\n")
+    }
 }
 
 function encodeResult(result, count) {
