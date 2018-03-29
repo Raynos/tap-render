@@ -102,10 +102,10 @@ function Render(opts) {
 
         stream.write(encodeResult(result, count))
 
-        if (result.ok) {
-            stream.pass++
-        } else if (result.skip) {
+        if (result.skip) {
             stream.skip++
+        } else if (result.ok) {
+            stream.pass++
         } else if (result.todo) {
             stream.todo++
         } else {
