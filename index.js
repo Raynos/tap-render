@@ -160,9 +160,17 @@ function encodeResult(result, count) {
         result.name.replace(/\s+/g, " ") : ""
 
     if (result.skip) {
-        output += " # SKIP"
+        output += " # SKIP";
+
+        if (typeof result.skip === 'string') {
+          output += " " + result.skip;
+        }
     } else if (result.todo) {
-        output += " # TODO"
+        output += " # TODO";
+
+        if (typeof result.todo === 'string') {
+          output += " " + result.todo;
+        }
     }
 
     output += "\n"
