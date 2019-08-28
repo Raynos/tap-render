@@ -1,5 +1,4 @@
 var PauseStream = require("pause-stream")
-var json = typeof JSON === "object" ? JSON : require("jsonify")
 
 // Keep a counter of all running Render's and a list of their
 // results
@@ -189,8 +188,8 @@ function encodeError(result) {
     output += outer + "---\n"
     output += inner + "operator: " + result.operator + "\n"
 
-    var expected = json.stringify(result.expected, null, "  ") || ""
-    var actual = json.stringify(result.actual, null, "  ") || ""
+    var expected = JSON.stringify(result.expected, null, "  ") || ""
+    var actual = JSON.stringify(result.actual, null, "  ") || ""
 
     if (Math.max(expected.length, actual.length) > 65) {
         expected = expected.replace(/\n/g, "\n" + inner + "  ")
