@@ -1,6 +1,9 @@
 # @munter/tap-render
 
-
+[![NPM version](https://badge.fury.io/js/%40munter%2Ftap-render.svg)](http://badge.fury.io/js/%40munter%2Ftap-render)
+[![Build Status](https://travis-ci.org/Munter/tap-render.svg?branch=master)](https://travis-ci.org/Munter/tap-render)
+[![Coverage Status](https://img.shields.io/coveralls/Munter/tap-render.svg)](https://coveralls.io/r/Munter/tap-render?branch=master)
+[![Dependency Status](https://david-dm.org/Munter/tap-render.svg)](https://david-dm.org/Munter/tap-render)
 
 A readable stream of TAP output
 
