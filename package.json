@@ -1,20 +1,24 @@
 {
-  "name": "tap-render",
+  "name": "@munter/tap-render",
   "version": "0.1.7",
   "description": "A readable stream of TAP output",
   "keywords": [],
-  "author": "Raynos <raynos2@gmail.com>",
-  "repository": "git://github.com/Raynos/tap-render.git",
+  "author": "Peter Müller <munter@fumle.dk>",
+  "repository": "git://github.com/Munter/tap-render.git",
   "main": "index",
-  "homepage": "https://github.com/Raynos/tap-render",
+  "homepage": "https://github.com/Munter/tap-render",
   "contributors": [
     {
-      "name": "Raynos"
+      "name": "Raynos",
+      "email": "raynos2@gmail.com"
+    },
+    {
+      "name": "Peter Müller",
+      "email": "munter@fumle.dk"
     }
   ],
   "bugs": {
-    "url": "https://github.com/Raynos/tap-render/issues",
-    "email": "raynos2@gmail.com"
+    "url": "https://github.com/Munter/tap-render/issues"
   },
   "dependencies": {
     "jsonify": "0.0.0",
@@ -28,7 +32,7 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "http://github.com/Raynos/tap-render/raw/master/LICENSE"
+      "url": "http://github.com/Munter/tap-render/raw/master/LICENSE"
     }
   ],
   "scripts": {

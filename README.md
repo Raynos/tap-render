@@ -1,4 +1,4 @@
-# tap-render
+# @munter/tap-render
 
 [![build status][1]][2]
 
@@ -6,10 +6,12 @@
 
 A readable stream of TAP output
 
-Refactored out of [substack/tape][5]
+Refactored out of [substack/tape][5] by [Raynos](https://github.com/Raynos)
+
+Forked from [Raynos/tap-render](https://github.com/Raynos/tap-render) by [Munter](https://github.com/Munter)
 
 `tap-render` only emits the start and end of a valid TAP output
-  once even if there are multiple Render's. This is to allow 
+  once even if there are multiple Render's. This is to allow
   you to use multiple TAP outputting test frameworks in one
   process.
 
@@ -79,6 +81,7 @@ r.close()
 ## Contributors
 
  - Raynos
+ - Munter
 
 ## MIT Licenced
 
@@ -88,4 +91,4 @@ r.close()
   [3]: http://ci.testling.com/Raynos/tap-render.png
   [4]: http://ci.testling.com/Raynos/tap-render
   [5]: https://github.com/substack/tape/blob/35ba8a36f023361089d1d09c122a8288cb061ede/lib/render.js
-  
+
