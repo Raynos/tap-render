@@ -21,7 +21,7 @@
     "url": "https://github.com/Munter/tap-render/issues"
   },
   "dependencies": {
-    "pause-stream": "0.0.7"
+    "pause-stream": "0.0.11"
   },
   "devDependencies": {
     "browserify": "https://github.com/raynos/node-browserify/tarball/master",
