@@ -1,4 +1,13 @@
 language: node_js
+cache: npm
+
 node_js:
-  - 0.8
-  - 0.9
+  - '8'
+  - '10'
+  - '11'
+
+services:
+  - docker
+
+install: npm install
+script: npm t
